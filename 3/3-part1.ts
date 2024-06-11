@@ -1,4 +1,4 @@
-import { input } from "./3.input.js";
+import { input } from "./3-input.ts";
 
 const getNumbers = (input: string) => {
   let numbers: { number: string; start: number; end: number }[] = [];
