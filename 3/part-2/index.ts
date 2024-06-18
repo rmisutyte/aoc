@@ -1,7 +1,12 @@
 import { input } from "./input";
+type NumberData = { 
+  number: number;
+  start: number;
+  end: number 
+}
 
 const getNumbers = (input: string) => {
-  let numbers: { number: number; start: number; end: number }[] = [];
+  let numbers: NumberData[] = [];
   const numbersInInput = input.matchAll(/\d+/g);
   for (let number of numbersInInput) {
     numbers.push({
@@ -17,32 +22,46 @@ const getAsteriskIndexes = (input: string) => {
   return [...input.matchAll(/\*/g)].map((asterisk) => {return asterisk.index})
 }
 
-const getAdjacentNumbers = (input: string[]) => {
-  let sum: number = 0;
+const getAdjacentNumbersForAsterisk = (asteriskIndex: number, numbers: NumberData[]) => {
+  return numbers.filter((number) => {
+    for(let i = number.start-1;i < number.end+2; i++) {
+      if (asteriskIndex === i) {
+        return true;
+      }
+    }
+    return false;
+  })
+}
 
-  input.forEach((line, lineIndex) => {
+const getSumOfGearRations = (input: string[]) => {
+
+  const gearRations = input.map((line, lineIndex) => {
     const asterisksAt = getAsteriskIndexes(line);
 
-      asterisksAt.forEach((asteriskIndex) => {
-        let adjacentNumbers: number[] = [];
+    if (asterisksAt.length > 0) {
+      const adjacentNumbersForAsterisk = asterisksAt.map((asteriskIndex) => {
+        const allSurroundingNumbers = [input[lineIndex-1], line, input[lineIndex+1]].filter((line) => line !== undefined).map((line) => {
+          return getNumbers(line)
+        }).filter((numbers) => numbers.length > 0).flat()
 
-        const allNumbers = [input[lineIndex-1], line, input[lineIndex+1]].flatMap((line) => {
-          return getNumbers(line);
-        });
+      const adjacentNumbers = getAdjacentNumbersForAsterisk(asteriskIndex!, allSurroundingNumbers)
+      return adjacentNumbers;
+      })
 
-        allNumbers.forEach((number) => {
-          for(let i = number.start-1;i < number.end+2; i++) {
-            if(asteriskIndex === i) { adjacentNumbers.push(number.number)};
-          }
-        })
-
-      if(adjacentNumbers.length > 1) {
-       sum += (adjacentNumbers[0] * adjacentNumbers[1]);
-      }
+      return adjacentNumbersForAsterisk;
+    } else {
+      return undefined;
+    }
+    }).filter(el => el !== undefined).flat().filter((el) => {
+      return el!.length === 2;
     })
-    })
+
+    const sum = gearRations.reduce((acc, current) => {
+      acc += (current![0].number * current![1].number)
+      return acc;
+    }, 0)
   
   return sum;
 }
 
-console.log(getAdjacentNumbers(input))
+console.log(getSumOfGearRations(input))
