@@ -50,7 +50,7 @@ const getSumOfGearRations = (input: string[]) => {
             line,
             input[lineIndex + 1],
           ]
-            .filter((line) => line !== undefined)
+            .filter(Boolean)
             .map((line) => {
               return getNumbers(line);
             })
@@ -69,7 +69,7 @@ const getSumOfGearRations = (input: string[]) => {
         return undefined;
       }
     })
-    .filter((el) => el !== undefined)
+    .filter(Boolean)
     .flat()
     .filter((el) => {
       return el!.length === 2;
