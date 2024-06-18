@@ -26,38 +26,20 @@ const getAdjacentNumbers = (input: string[]) => {
       asterisksAt.forEach((asteriskIndex) => {
         let adjacentNumbers: number[] = [];
 
-        // get numbers on prev line
-        if (lineIndex > 0) {
-        const numbersOnPrevLine = getNumbers(input[lineIndex-1]);
-        numbersOnPrevLine.forEach((number) => {
-          for(let i = number.start-1;i < number.end+2; i++) {
-            if(asteriskIndex === i) { adjacentNumbers.push(number.number)};
-          }
-        })
-      }
+        const allNumbers = [input[lineIndex-1], line, input[lineIndex+1]].flatMap((line) => {
+          return getNumbers(line);
+        });
 
-        // get numbers on same line
-        const numbersOnSameLine = getNumbers(line);
-        numbersOnSameLine.forEach((number) => {
+        allNumbers.forEach((number) => {
           for(let i = number.start-1;i < number.end+2; i++) {
             if(asteriskIndex === i) { adjacentNumbers.push(number.number)};
           }
         })
-
-        //get numbers on next line 
-        if(lineIndex+1 < input.length) {
-        const numbersOnNextLine = getNumbers(input[lineIndex+1]);
-        numbersOnNextLine.forEach((number) => {
-          for(let i = number.start-1;i < number.end+2; i++) {
-            if(asteriskIndex === i) { adjacentNumbers.push(number.number)};
-          }
-        })
-      }
 
       if(adjacentNumbers.length > 1) {
-       sum += (adjacentNumbers[0] * adjacentNumbers[1])
+       sum += (adjacentNumbers[0] * adjacentNumbers[1]);
       }
-      })
+    })
     })
   
   return sum;
