@@ -29,7 +29,7 @@ const getAdjacentNumbersForAsterisk = (
   numbers: NumberData[]
 ) => {
   return numbers.filter((number) => {
-    for (let i = number.start - 1; i < number.end + 2; i++) {
+    for (let i = number.start - 1; i <= number.end + 1; i++) {
       if (asteriskIndex === i) {
         return true;
       }
