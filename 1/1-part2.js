@@ -998,7 +998,7 @@ const values = [
   "xjtctnllkp57seven2jgbjmjbxnpfgone",
   "eight5gmbzbqtxrr27dtgfdbmtc7",
   "twoggvcnfmtrseven4dx",
-  "ssevenhcltwoseven2cxrmxxcr",
+  "ssevenhcltwoseven2cxrmxxcr"
 ];
 
 const replaceWordsToDigits = (fullString) => {
@@ -1035,7 +1035,7 @@ const replaceWordsToDigits = (fullString) => {
     { value: 6, name: "six" },
     { value: 7, name: "seven" },
     { value: 8, name: "eight" },
-    { value: 9, name: "nine" },
+    { value: 9, name: "nine" }
   ];
 
   // console.log(words)
@@ -1054,7 +1054,7 @@ const replaceWordsToDigits = (fullString) => {
         } else {
           return [
             { index: fullString.indexOf(word.name), value: word.value },
-            { index: fullString.lastIndexOf(word.name), value: word.value },
+            { index: fullString.lastIndexOf(word.name), value: word.value }
           ];
         }
       }

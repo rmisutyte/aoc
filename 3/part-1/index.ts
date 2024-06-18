@@ -1,4 +1,4 @@
-import { input } from "./3-input.ts";
+import { input } from "./input.ts";
 
 const getNumbers = (input: string) => {
   let numbers: { number: string; start: number; end: number }[] = [];
@@ -33,7 +33,7 @@ const getSum = (input: string[]) => {
       }
       // check prev line
       for (let i = number.start - 1; i <= number.end + 1; i++) {
-        if (input[lineIndex - 1] && isSymbol(input[lineIndex + -1][i])) {
+        if (input[lineIndex - 1] && isSymbol(input[lineIndex + 1][i])) {
           sum += Number(number.number);
         }
       }
